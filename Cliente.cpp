@@ -10,9 +10,9 @@
 
 
 
-int main() {
-    Transfer transfer("/ColaA");  
-  
+int main() { 
+    Transfer transferC("/ColaC");  // cola para recibir mensajes el cliente
+    Transfer transferEA("/ColaEA");  // cola para recibir mensajes la entidad A
 
     bool on = true;
     while (on) {
@@ -22,10 +22,10 @@ int main() {
         if (x == 0) {
             on = false;
         } else {
-            transfer.recibirMensaje();
+            transferC.recibirMensaje();
             mensaje msg1;
             // Enviar un mensaje
-            bool ok=transfer.pet("Mensaje desde Proceso1",1,2,1);
+            bool ok=transferEA.pet("Mensaje desde Cliente",1,2,1);
             if (ok==0){
                 std::cout<<"Hubo problemas para enviar el mensaje";
             }
@@ -33,8 +33,10 @@ int main() {
             sleep(2); // Esperar 2 segundos antes de la próxima iteración
         }
     }
-    transfer.cerrarConexion();
-    transfer.desvincular();
+    transferEA.cerrarConexion();
+    transferEA.desvincular();
+    transferC.cerrarConexion();
+    transferC.desvincular();
     std::cout << "Se ha cerrado el proceso CLIENTE"<<endl;
 
 
