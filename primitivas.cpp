@@ -10,10 +10,11 @@ using namespace std;
 
 
 const int MAX_SIZE = 7171;
-mqd_t mq;
 
 
-Transfer::Transfer(const char* colaNombre){
+
+Transfer::Transfer(const char* colaNombre, mqd_t mq1){
+    mq=mq1;
     COLA_MENSAJES = colaNombre;
     
     struct mq_attr attr;
@@ -32,7 +33,7 @@ Transfer::Transfer(const char* colaNombre){
 bool Transfer::pet(const std::string& informacion, uint8_t pas, uint8_t id_dest, uint8_t id_orig){
     
     mensaje msg;
-    strncpy(msg.informacion, informacion.c_str(), MAX_SIZE-3);
+    strncpy(msg.informacion, informacion.c_str(), MAX_SIZE);
     msg.pas = pas;
     msg.id_dest = id_dest;
     msg.id_orig = id_orig;
@@ -47,7 +48,7 @@ bool Transfer::pet(const std::string& informacion, uint8_t pas, uint8_t id_dest,
 
 bool Transfer::ind(const std::string& informacion, uint8_t pas){
     mensaje msg;
-    strncpy(msg.informacion, informacion.c_str(), MAX_SIZE-3);
+    strncpy(msg.informacion, informacion.c_str(), MAX_SIZE);
     msg.pas = pas;
     msg.id_dest = 0;
     msg.id_orig = 0;
@@ -63,7 +64,7 @@ bool Transfer::ind(const std::string& informacion, uint8_t pas){
 bool Transfer::res(const std::string& informacionR, uint8_t pas){
     
     mensaje msg;
-    strncpy(msg.informacion, informacionR.c_str(), MAX_SIZE-3);
+    strncpy(msg.informacion, informacionR.c_str(), MAX_SIZE);
     msg.pas = pas;
     msg.id_dest = 0;
     msg.id_orig = 0;
@@ -79,7 +80,7 @@ bool Transfer::res(const std::string& informacionR, uint8_t pas){
 
 bool Transfer::con(const std::string&informacionR, uint8_t pas){
     mensaje msg;
-    strncpy(msg.informacion, informacionR.c_str(), MAX_SIZE-3);
+    strncpy(msg.informacion, informacionR.c_str(), MAX_SIZE);
     msg.pas = pas;
     msg.id_dest = 0;
     msg.id_orig = 0;
@@ -110,6 +111,8 @@ struct mensaje Transfer::recibirMensaje() {
                 std::cout << "ID Origen: " << static_cast<int>(msg.id_orig) << std::endl;
             } else if (errno == ETIMEDOUT) {
                 std::cout << "No hay mensajes disponibles en el tiempo especificado." << std::endl;
+                msg.id_orig=0;
+                return msg;
             } else {
                 perror("mq_timedreceive");
             }

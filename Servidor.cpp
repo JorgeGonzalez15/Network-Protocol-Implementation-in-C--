@@ -11,8 +11,10 @@
 
 
 int main() {
-    Transfer transferS("/ColaS");  // cola para recibir mensajes el Servidor
-    Transfer transferEB("/ColaEB"); // cola donde recibe los mensajes la entidad B
+    mqd_t mq1;
+    mqd_t mq2;
+    Transfer transferS("/ColaS",mq1);  // cola para recibir mensajes el Servidor
+    Transfer transferEB("/ColaEB",mq2); // cola donde recibe los mensajes la entidad B
 
     bool on = true;
     while (on) {

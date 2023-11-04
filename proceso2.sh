@@ -2,7 +2,7 @@
 
 
 
-g++ Cliente.cpp primitivas.cpp -o ExeProc2 -lrt
+g++ EntidadA.cpp primitivas.cpp -o ExeProc2 -lrt
 
 
 

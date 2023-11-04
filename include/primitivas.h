@@ -15,7 +15,7 @@ using namespace std;
 
 struct mensaje {
     public:
-    char informacion[8000];
+    char informacion[7171];
     uint8_t pas;
     uint8_t id_dest;
     uint8_t id_orig;
@@ -26,8 +26,9 @@ struct mensaje {
 
 class Transfer{
 const char* COLA_MENSAJES;
+mqd_t mq;
 public:
-Transfer(const char* colaNombre);
+Transfer(const char* colaNombre, mqd_t mq1);
 bool pet(const std::string& informacion, uint8_t pas, uint8_t id_dest, uint8_t id_orig);
 bool ind(const std::string& informacion,uint8_t pas);
 bool res(const std::string& informacionR,uint8_t pas);

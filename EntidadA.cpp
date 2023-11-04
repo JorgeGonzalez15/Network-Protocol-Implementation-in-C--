@@ -11,8 +11,12 @@
 
 
 int main() {
-    Transfer transferC("/ColaC");  // cola para recibir mensajes el cliente
-    Transfer transferEA("/ColaEA");  // cola para recibir mensajes la entidad A
+    mqd_t mq1;
+    mqd_t mq2;
+    Transfer transferC("/ColaC",mq1);  // cola para recibir mensajes el cliente
+    Transfer transferEA("/ColaEA",mq2);  // cola para recibir mensajes la entidad A //primero se abren las colas de mensaje que permiten comunicarse a los procesos
+
+
 
     bool on = true;
     while (on) {
@@ -33,11 +37,15 @@ int main() {
             sleep(2); // Esperar 2 segundos antes de la próxima iteración
         }
     }
+
+
+
+
     transferEA.cerrarConexion();
     transferEA.desvincular();
     transferC.cerrarConexion();
     transferC.desvincular();
-    std::cout << "Se ha cerrado el proceso ENTIDAD A"<<endl;
+    std::cout << "Se ha cerrado el proceso ENTIDAD A"<<endl; //se cierran las colas de mensajes de los procesos
 
     return 0;
 }
