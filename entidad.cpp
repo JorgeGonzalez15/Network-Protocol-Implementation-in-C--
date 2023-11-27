@@ -22,17 +22,44 @@ void Entidad::cargar_a_memo(PDU pdu_lado)
 {
     *e_puntero = pdu_lado;
 }
-void Entidad::cargar_de_memo()
+PDU Entidad::cargar_de_memo()
 {
     PDU e_pdu = *e_puntero;
-    cout<<e_pdu.datos<<endl;
+    return e_pdu;
 }
+bool Entidad::comprobarpdu( PDU pdu, int &tipo ){
+    if(pdu.patron==170){
+        
+        uint8_t destino=(pdu.destino) & 0xFF;
+        
+        if(destino==e_idorigen){
+            
+            uint8_t mascara = 0xC0; 
+            if(((pdu.tipo & mascara)>>6)==1){
+                tipo=1;
+                return 1;
+                cout<<"Tipo1"<<endl;
+            }
+            else if(((pdu.tipo & mascara)>>6)==2){
+                tipo=2;
+                return 1;
+            }
+            else if(((pdu.tipo & mascara)>>6)==0){
+                tipo=0;
+                if(pdu.longitud==strlen(pdu.datos)){
+                    return 1;
+                }
 
+            }
+        }
+    }
+return 0;
+}
 std::vector<PDU> Entidad::crearPDU(int tipo, std::string informacion, uint8_t pas, uint8_t idorigen, uint8_t iddestino)
 {
     std::vector<PDU> pduv(7);
     uint16_t longitud = informacion.length();
-    uint16_t paspid = (static_cast<uint16_t>(iddestino) << 8) || iddestino;
+    uint16_t paspid = (static_cast<uint16_t>(pas) << 8) | iddestino;
     if (tipo == 0)
     {
         if (longitud <= 1024)

@@ -12,13 +12,13 @@
 #define PRIMITIVAS_H
 using namespace std;
 
-
+//Este será el tipo de mensaje que se eviarán a traves de la cola de mensaje con la información necesaria para poder ejecutar las primitivas correctamente
 struct mensaje {
     public:
-    char informacion[7171];
-    uint8_t pas;
-    uint8_t id_dest;
-    uint8_t id_orig;
+    char informacion[7171];//7171 bytes ya que el tamaño máximo de información a mandar es 7168 bytes.
+    uint8_t pas;   //PAS
+    uint8_t id_dest; //ID destino
+    uint8_t id_orig; //ID origen
     friend class Transfer;
 };
 

@@ -2,7 +2,7 @@
 
 
 
-g++ EntidadB.cpp primitivas.cpp memocomp.cpp entidad.cpp -o ExeProc3 -lrt
+g++ EntidadB.cpp primitivas.cpp memocomp.cpp entidad.cpp semaforo.cpp -o ExeProc3 -lrt
 
 
 

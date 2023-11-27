@@ -29,12 +29,13 @@ public:
     void enviarpdu(PDU pdu);
     void punt_a_memo(memocomp memo);
     void cargar_a_memo(PDU pdu_lado);
-    void cargar_de_memo();
+    PDU cargar_de_memo();
+    bool comprobarpdu(PDU pdu, int &tipo);
 
 
     
     std::vector<PDU> crearPDU(int tipo, std::string informacion, uint8_t pas, uint8_t idorigen, uint8_t iddestino);
-
+    bool e_fragment=false; 
 private:
     static const uint8_t e_patron=170;
     std::vector<uint8_t> e_iddestinos;
@@ -44,7 +45,7 @@ private:
     uint8_t e_iddestino;
     PDU e_pdu;
     bool e_mode; //modo de memoria 1-mem compartida 0 socket
-    bool e_fragment; //entra en modo fragmentación, tanto para recibir cómo para crear PDUS
+                    //entra en modo fragmentación, tanto para recibir cómo para crear PDUS
     PDU *e_puntero = NULL;
     
 };

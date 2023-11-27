@@ -35,8 +35,8 @@ int main() {
      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     cin>>y;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    uint8_t Pas=x;
-    uint8_t IDdestino=y;
+    uint8_t Pas=y;
+    uint8_t IDdestino=x;
     std::cout<< "Escriba 1 para el cliente de eco o 0 para el modo de transferencia de ficheros"<<endl;
     cin>>modo;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');

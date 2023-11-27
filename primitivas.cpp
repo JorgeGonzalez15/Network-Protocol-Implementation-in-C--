@@ -1,3 +1,8 @@
+//INTERFAZ, biblioteca de primitivas, aquí programo las primitivas que permitirán obtener servicios a través de la interfaz.
+//Clase Transfer con funciones que representan los 4 modos de invocación: pet(), ind(), res(), con()
+// El constructor lo uso para abrir colas de mensajes, habrá 4 colas de mensaje, 2 para los mensajes que llegan a las entidades y dos para los que llegan al cliente y servidor.
+//Añado también en esta clase funciones que no son primitivas pero sirven para gestionar las colas de mensaje o desvincularlas por motivos de comodidad ya que esta biblioteca estará inclida en el código de todos los procesos.
+
 
 #include <iostream>
 #include <cstring>
@@ -51,7 +56,7 @@ bool Transfer::ind(const std::string& informacion, uint8_t pas){
     strncpy(msg.informacion, informacion.c_str(), MAX_SIZE);
     msg.pas = pas;
     msg.id_dest = 0;
-    msg.id_orig = 0;
+    msg.id_orig = 1;
    
 
      if (mq_send(mq, reinterpret_cast<const char*>(&msg), sizeof(struct mensaje), 0) == -1) {
@@ -67,7 +72,7 @@ bool Transfer::res(const std::string& informacionR, uint8_t pas){
     strncpy(msg.informacion, informacionR.c_str(), MAX_SIZE);
     msg.pas = pas;
     msg.id_dest = 0;
-    msg.id_orig = 0;
+    msg.id_orig = 1;
    
 
      if (mq_send(mq, reinterpret_cast<const char*>(&msg), sizeof(struct mensaje), 0) == -1) {
@@ -83,7 +88,7 @@ bool Transfer::con(const std::string&informacionR, uint8_t pas){
     strncpy(msg.informacion, informacionR.c_str(), MAX_SIZE);
     msg.pas = pas;
     msg.id_dest = 0;
-    msg.id_orig = 0;
+    msg.id_orig = 1;
    
 
      if (mq_send(mq, reinterpret_cast<const char*>(&msg), sizeof(struct mensaje), 0) == -1) {
@@ -104,13 +109,14 @@ struct mensaje Transfer::recibirMensaje() {
             int bytes_received = mq_timedreceive(mq, reinterpret_cast<char*>(&msg), sizeof(struct mensaje), &prio, &timeout);
 
             if (bytes_received != -1) {
-                std::cout << "Mensaje recibido:" << std::endl;
-                std::cout << "Información: " << msg.informacion << std::endl;
-                std::cout << "PAS: " << static_cast<int>(msg.pas) << std::endl;
-                std::cout << "ID Destino: " << static_cast<int>(msg.id_dest) << std::endl;
-                std::cout << "ID Origen: " << static_cast<int>(msg.id_orig) << std::endl;
+                //std::cout << "Mensaje recibido:" << std::endl;
+               // std::cout << "Información: " << msg.informacion << std::endl;
+                //std::cout << "PAS: " << static_cast<int>(msg.pas) << std::endl;
+                //std::cout << "ID Destino: " << static_cast<int>(msg.id_dest) << std::endl;
+                //std::cout << "ID Origen: " << static_cast<int>(msg.id_orig) << std::endl;
             } else if (errno == ETIMEDOUT) {
-                std::cout << "No hay mensajes disponibles en el tiempo especificado." << std::endl;
+                std::cout << ".";
+                std::cout.flush();
                 msg.id_orig=0;
                 return msg;
             } else {
