@@ -45,10 +45,9 @@ int main() {
         cout<<"PAS "<<static_cast<int>(Pas)<<endl;
 
         bool on = true;
-
+        std::cout<< "Cliente ECO iniciado, escriba el mensaje para servicio eco a coninuacion, 0 para salir:"<<endl;
         while (on) {
             
-                std::cout<< "Cliente ECO iniciado, escriba su mensaje a coninuacion, 0 para salir:"<<endl;
                 string texto;
                 getline(cin, texto);
                 if (texto!="0"){

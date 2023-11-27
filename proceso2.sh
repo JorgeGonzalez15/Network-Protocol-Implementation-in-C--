@@ -2,7 +2,7 @@
 
 
 
-g++ EntidadA.cpp primitivas.cpp -o ExeProc2 -lrt
+g++ EntidadA.cpp primitivas.cpp memocomp.cpp entidad.cpp -o ExeProc2 -lrt
 
 
 

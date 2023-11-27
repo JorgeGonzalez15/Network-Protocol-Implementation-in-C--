@@ -3,7 +3,7 @@
 
 
 
-g++ Cliente.cpp primitivas.cpp -o ExeProc1 -lrt
+g++ Cliente.cpp primitivas.cpp  -o ExeProc1 -lrt
 
 
 
